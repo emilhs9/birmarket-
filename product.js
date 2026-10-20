@@ -796,3 +796,5 @@ document.addEventListener('click', function(e) {
         e.preventDefault();
     }
 });
+
+// Created by emilhs9
