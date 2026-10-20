@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="az">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Məhsul detalları | Birmarket</title>
+  <link rel="icon" type="image/svg+xml" href="img/birmarket_logo2.svg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <style>
+    .tab-btn {
+      position: relative;
+      padding-bottom: 12px;
+      font-weight: 500;
+      color: #50557A;
+      transition: color 0.2s ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .tab-btn:hover {
+      color: #ea207e;
+    }
+    .tab-btn.active {
+      color: #ea207e;
+      font-weight: 700;
+    }
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background-color: #ea207e;
+      border-radius: 2px 2px 0 0;
+    }
+    .spec-table-row:nth-child(even) {
+      background-color: #FAFAFC;
+    }
+    .spec-table-row:nth-child(odd) {
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+
+<body class="bg-[#F8F9FA] text-[#1E244D]">
+
+  <section class="LayoutWithFooter-Header sticky w-full left-0 top-0 right-0 z-[60]">
+    <div class="TopHeader hidden lg:flex items-center h-9 bg-[#F1F2F3] border-b border-b-[#DCDDE4]">
+      <div class="container mx-auto px-4 lg:px-0 flex items-center w-full 2xl:max-w-[1226px] xl:max-w-[1226px]">
+        <a href="javascript:void(0)" class="text-xs text-[#6D6E73] mr-4 whitespace-nowrap transition-all hover:text-opacity-70">Çatdırılma və ödəmə</a>
+        <a href="javascript:void(0)" class="text-xs text-[#6D6E73] mr-4 whitespace-nowrap transition-all hover:text-opacity-70" data-i18n="header.returns">Qaytarılma</a>
+        <a href="javascript:void(0)" class="text-xs text-[#6D6E73] mr-4 whitespace-nowrap transition-all hover:text-opacity-70" data-i18n="header.warranty">Zəmanət</a>
+        <a href="javascript:void(0)" class="text-xs text-white mr-4 whitespace-nowrap transition-all hover:text-opacity-70 inline-block py-0.5 px-1 rounded-sm bg-gradient-to-r from-[#ea207e] to-[#9c21a6]">Birmarket-də satın</a>
+        
+        <div class="CallCenter ml-auto xl:mr-5 mr-0 cursor-pointer relative">
+          <div class="flex items-center justify-between w-full">
+            <div class="flex gap-3 items-center sm:pr-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block align-middle shrink-0 text-[14px] lg:text-[#6D6E73] text-[#1E244D]">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <a href="tel:915" class="text-xs lg:text-[#6D6E73] text-[#1E244D] whitespace-nowrap transition ease-in-out duration-200 hover:opacity-70">915</a>
+            </div>
+            <div class="TurningArrowIcon flex justify-center items-center h-[10px] ml-[10px]">
+              <svg width="10" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.06 0L4 3.05333L0.94 0L0 0.94L4 4.94L8 0.94L7.06 0Z" fill="#6D6E73"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="LangSelect sm:mr-5 cursor-pointer sm:relative">
+          <div class="LangSelect-Button flex flex-row flex-nowrap justify-between items-center text-xs lg:text-[#6D6E73] text-[#1E244D]">
+            <img id="header-lang-img" loading="lazy" src="img/flag_az.svg" title="AZ" class="ml-0 w-[18px] mr-3 md:mr-2" />
+            <span id="header-lang-text" class="hover:cursor-pointer sm:mr-auto">AZ</span>
+            <div class="TurningArrowIcon flex justify-center items-center h-[10px] ml-[10px] LangSelect-Arrow">
+              <svg width="10" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.06 0L4 3.05333L0.94 0L0 0.94L4 4.94L8 0.94L7.06 0Z" fill="#6D6E73"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="LangSelect-Dropdown py-[10px] sm:-right-[10px] sm:top-[32px] right-[20px] top-[45px] text-[#1E244DFF] text-base rounded-sm shadow-dropdown bg-white absolute z-[100] w-[170px]" style="display: none">
+            <div data-set-lang="ru" class="flex h-[40px] items-center pl-5 text-[13px] cursor-pointer w-full hover:text-[#ea207e] hover:font-bold hover:bg-[#fafbff]">
+              <img loading="lazy" src="img/flag_ru.svg" class="h-auto w-[21px]" />
+              <span class="ml-[10px]">Русский</span>
+            </div>
+            <div data-set-lang="az" class="flex h-[40px] items-center pl-5 text-[13px] cursor-pointer w-full hover:text-[#ea207e] hover:font-bold hover:bg-[#fafbff]">
+              <img loading="lazy" src="img/flag_az.svg" class="h-auto w-[21px]" />
+              <span class="ml-[10px]">Azərbaycan</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="HeaderUser">
+          <div class="header-right flex items-center text-[#1E244D] lg:text-[#6D6E73] font-bold transition hover:opacity-70">
+            <a href="auth.html" class="flex items-center text-sm lg:text-[#6D6E73]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block align-middle shrink-0 mr-2 text-sm lg:text-[#6D6E73]">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span class="text-[12px] font-[700] lg:font-[400]" data-i18n="header.login">Qeydiyyat | Giriş</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <header class="bg-[#F1F2F3] border-b border-[#E5E7EB]">
+      <section
+        class="relative py-4 grid grid-cols-[1fr_auto_auto_auto_auto] grid-rows-[36px_1fr] sm:flex sm:py-3 container mx-auto px-4 lg:px-0 grid-areas-header-layout-citypicker gap-[10px] items-center">
+        
+        <div class="flex items-center justify-start [grid-area:logo]">
+          <a href="index.html" alt="Birmarket.az" title="Birmarket.az ana səhifəsinə keçin"
+            class="sm:max-h-[95%] sm:max-w-[40%]">
+            <svg width="140" height="30" viewBox="0 0 140 30" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-[116px] sm:w-[140px] h-auto">
+              <path d="M44.061 4.27197C45.1347 4.27197 45.9347 4.93564 45.9347 5.93115V6.11781C45.9347 7.12368 45.1347 7.77698 44.061 7.77698C42.9873 7.77698 42.1558 7.11331 42.1558 6.11781V5.93115C42.1558 4.92527 42.9873 4.27197 44.061 4.27197Z" fill="#EA207E"></path>
+              <path d="M131.53 15.4919C131.53 11.8003 129.12 9.073 125.288 9.073C121.456 9.073 118.667 11.9247 118.667 15.7201V16.6948C118.667 20.4176 121.404 23.373 125.414 23.373C128.067 23.373 130.183 22.2116 131.52 19.754L129.13 18.437C128.162 20.0754 127.014 20.7909 125.383 20.7909C123.13 20.7909 121.604 19.4221 121.467 16.9126H131.52V15.4919H131.53ZM121.593 14.6727C121.941 12.6921 123.204 11.5618 125.288 11.5618C127.593 11.5618 128.562 13.1691 128.614 14.6727H121.593Z" fill="#EA207E"></path>
+              <path d="M91.006 9.39446V11.0536C90.0376 9.86111 88.4586 9.073 86.585 9.073C82.9955 9.073 80.1323 11.8729 80.1323 15.7823V16.6845C80.1323 20.5939 82.9955 23.3938 86.585 23.3938C88.4586 23.3938 90.0376 22.6057 91.006 21.4131V23.0723H93.9534V9.39446H91.006ZM91.006 16.5497C91.006 19.1318 89.4797 20.8013 87.0692 20.8013C84.6586 20.8013 83.1323 19.1421 83.1323 16.5497V15.9171C83.1323 13.335 84.6586 11.6655 87.0692 11.6655C89.4797 11.6655 91.006 13.3246 91.006 15.9171V16.5497Z" fill="#EA207E"></path>
+              <path d="M34.2088 9.08339C32.3352 9.08339 30.7564 9.87146 29.788 11.0639V4.59351H26.8408V16.5804C26.8408 20.8525 29.8722 23.393 33.7036 23.393C37.7454 23.393 40.6716 20.5725 40.6716 16.6841V15.813C40.6716 11.8831 37.8086 9.08339 34.2193 9.08339H34.2088ZM37.7244 16.6322C37.7244 19.1105 36.1666 20.8006 33.7562 20.8006C31.3458 20.8006 29.788 19.1623 29.788 16.6322V15.9167C29.788 13.3348 31.3458 11.6653 33.7562 11.6653C36.1666 11.6653 37.7244 13.3244 37.7244 15.9167V16.6322Z" fill="#EA207E"></path>
+              <path d="M109.225 15.2531L114.825 9.39447H118.656L113.088 14.942L119.193 23.0715H115.572L111.078 16.9225L109.225 18.7372V23.0715H106.278V4.59351H109.225V15.2531Z" fill="#EA207E"></path>
+              <path d="M102.858 9.08337C103.658 9.08337 104.384 9.27003 104.973 9.63297L104.279 12.2773C103.742 12.0388 103.205 11.8832 102.563 11.8832C100.689 11.8832 99.2682 13.3039 99.2682 15.689V23.0827H96.3208V9.39446H99.2682V11.2921C100.068 9.68482 101.416 9.073 102.858 9.073V9.08337Z" fill="#EA207E"></path>
+              <path d="M73.4483 9.08337C76.6061 9.08337 78.5428 11.1987 78.5428 14.8383V23.0715H75.5956V14.9109C75.5956 12.9096 74.6799 11.6653 72.9747 11.6653C71.0695 11.6653 69.9749 12.9822 69.9749 15.0975V23.0715H67.0277V15.0975C67.0277 12.9822 66.2277 11.6653 64.3752 11.6653C62.6069 11.6653 61.3964 12.9822 61.3964 15.1805V23.0715H58.4492V9.39444H61.3964V11.1054C62.1437 9.97512 63.3752 9.073 65.2593 9.073C67.1329 9.073 68.5539 10.0996 69.196 11.5824C69.9222 10.2344 71.2906 9.073 73.4589 9.073L73.4483 9.08337Z" fill="#EA207E"></path>
+              <path d="M54.9128 9.08337C55.7128 9.08337 56.4391 9.27003 57.0286 9.63297L56.3339 12.2773C55.797 12.0388 55.2602 11.8832 54.6181 11.8832C52.7444 11.8832 51.3233 13.3039 51.3233 15.689V23.0827H48.376V9.39446H51.3233V11.2921C52.1233 9.68482 53.4707 9.073 54.9128 9.073V9.08337Z" fill="#EA207E"></path>
+              <path d="M45.5348 9.39453H42.5874V23.0724H45.5348V9.39453Z" fill="#EA207E"></path>
+              <path d="M137.466 9.39467H140.002V11.9766H137.466V14.7245V19.2558C137.466 20.2617 137.918 20.5727 138.75 20.5727C139.013 20.5727 139.181 20.5416 139.371 20.4898L139.665 22.968C139.286 23.1028 138.865 23.1547 138.35 23.1547C135.887 23.1547 134.518 21.8067 134.518 19.0899V17.659V11.9662H132.087V9.38431H134.518V5.4751H137.466V9.38431V9.39467Z" fill="#EA207E"></path>
+              <path d="M17.683 13.1271L10.315 0.694345C9.76766 -0.228519 8.42037 -0.228519 7.87303 0.694345L0.515569 13.1271C-0.168601 14.2781 -0.168601 15.709 0.515569 16.8704L7.88356 29.3135C8.4309 30.2363 9.77819 30.2363 10.3255 29.3135L17.6935 16.8704C18.3777 15.7194 18.3777 14.2884 17.6935 13.1271H17.683ZM13.9148 16.0616L9.39926 23.5585C9.26243 23.7867 8.9256 23.7867 8.78877 23.5585L4.27324 16.0616C3.87327 15.4083 3.87327 14.5891 4.27324 13.9359L8.78877 6.43891C8.9256 6.21079 9.26243 6.21079 9.39926 6.43891L13.9148 13.9359C14.3148 14.5891 14.3148 15.4083 13.9148 16.0616Z" fill="#EA207E"></path>
+            </svg>
+          </a>
+        </div>
+
+        <div data-info="citypicker-block" onclick="openCityModal()"
+          class="[grid-area:citypicker] items-center gap-1 h-9 cursor-pointer mx-0 sm:mx-2 header-city-trigger">
+          <div class="flex items-center h-full gap-2 pr-[4px]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="w-5 h-5 text-[#1E244D]">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span
+              class="flex text-nowrap text-[13px] leading-[24px] text-[#1E244D] min-w-[120px] w-[120px] respond-md:w-auto respond-md:min-w-min">
+              Şəhər:
+              <span data-info="citypicker-current-city" class="font-[700]">&nbsp;Bakı</span></span>
+          </div>
+        </div>
+
+        <div class="hidden sm:block [grid-area:category] sm:ml-3.5">
+          <a href="javascript:void(0)" onclick="openBurgerMenu(event); toggleBurgerCategories(true);" class="relative cursor-pointer flex items-center bg-[#ea207e] hover:bg-[#d41c72] px-4 rounded-sm h-9 select-none">
+            <span class="text-white text-sm font-bold flex items-center w-full"><span class="mr-2 whitespace-nowrap">
+                <span data-i18n="header.catalog">Məhsul kataloqu</span>
+              </span>
+              <div
+                class="TurningArrowIcon flex justify-center items-center h-[10px] transition-transform duration-[400ms] ease-in-out origin-center ml-auto"
+                style="transform: rotate(0deg)">
+                <svg width="10" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M7.06 0L4 3.05333L0.94 0L0 0.94L4 4.94L8 0.94L7.06 0Z" fill="#fff"></path>
+                </svg>
+              </div>
+            </span>
+          </a>
+        </div>
+
+        <div class="w-full sm:flex-1 sm:mr-3 z-40 [grid-area:search] order-last sm:order-none">
+          <form action="index.html" method="GET" class="QuickSearch flex w-full relative">
+            <input type="search" name="q" placeholder="Məhsul axtar" data-i18n-placeholder="header.search_placeholder" value=""
+              class="QuickSearch-Input flex-1 h-[36px] px-4 outline-none border border-r-0 border-[#DCDDE4] rounded-l-sm focus:border-[#EA207E] text-[13px]" autocomplete="off" />
+            <button
+              class="flex items-center px-4 h-[36px] transition-colors text-white bg-[#ea207e] rounded-r-sm hover:bg-[#d41c72] font-semibold text-[13px]">
+              <span data-i18n="header.search_btn">Axtar</span>
+            </button>
+            <input type="submit" class="hidden" />
+          </form>
+        </div>
+
+        <div class="flex items-center justify-center w-[36px] lg:w-auto shrink-0 [grid-area:favorite]">
+          <a href="favorites.html" title="Seçilmişlər"
+            class="flex items-center justify-center group text-[#1E244D] font-sm fond-bold transition-all lg:mr-2.5">
+            <div class="flex justify-start items-center w-[22px] h-[22px] sm:w-6 sm:h-6 relative">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="inline-block align-middle shrink-0 text-[22px] group-hover:opacity-70 transition-all text-[#1E244D]">
+                <path
+                  d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
+                </path>
+              </svg>
+              <span class="header-fav-badge hidden absolute -top-1.5 -right-2 bg-[#ea207e] text-white text-[10px] font-bold w-[18px] h-[18px] rounded-full flex items-center justify-center leading-none">0</span>
+            </div>
+            <span class="text-[13px] font-bold ml-3 hidden lg:block group-hover:opacity-70" data-i18n="header.favorites">Seçilmişlər</span>
+          </a>
+        </div>
+
+        <div class="flex items-center justify-center w-[36px] lg:w-auto shrink-0 [grid-area:cart] lg:-mr-[10px]">
+          <a href="cart.html" title="Səbət"
+            class="flex items-center group justify-center text-[#1E244D] font-sm fond-bold transition-all lg:mr-2.5">
+            <div class="flex justify-start items-center w-[22px] h-[22px] sm:w-6 sm:h-6 relative">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="inline-block align-middle shrink-0 text-[22px] group-hover:opacity-70 transition-all text-[#1E244D]">
+                <circle cx="8" cy="21" r="1"></circle>
+                <circle cx="19" cy="21" r="1"></circle>
+                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+              </svg>
+              <span class="header-cart-badge hidden absolute -top-1.5 -right-2 bg-[#ea207e] text-white text-[10px] font-bold w-[18px] h-[18px] rounded-full flex items-center justify-center leading-none">0</span>
+            </div>
+            <span class="text-[13px] font-bold ml-3 hidden lg:block group-hover:opacity-70 transition-all" data-i18n="header.cart">Səbət</span>
+          </a>
+        </div>
+
+        <div class="flex sm:hidden items-center justify-end [grid-area:menu] ml-1">
+          <button onclick="toggleBurgerMenu(event)" class="burger-trigger flex items-center justify-center p-1.5 rounded-md hover:bg-[#E2E8F0] transition-colors cursor-pointer" aria-label="Menyu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="text-[#50557A] hover:text-[#EA207E] transition-colors">
+              <line x1="4" x2="20" y1="12" y2="12"></line>
+              <line x1="4" x2="20" y1="6" y2="6"></line>
+              <line x1="4" x2="20" y1="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </section>
+    </header>
+  </section>
+
+  <section class="bg-white border-b border-[#f1f2f3] py-2.5">
+    <div class="container mx-auto px-4 lg:px-0 2xl:max-w-[1226px] xl:max-w-[1226px]">
+      <div id="product-breadcrumb" class="flex items-center flex-wrap gap-1.5 text-[12px] text-[#71717A]">
+        <a href="index.html" class="hover:text-[#ea207e] transition-colors">Birmarket</a>
+        <span>›</span>
+        <a href="javascript:void(0)" class="hover:text-[#ea207e] transition-colors">Kateqoriyalar</a>
+        <span>›</span>
+        <span id="breadcrumb-category" class="hover:text-[#ea207e] transition-colors cursor-pointer">İdman və Əyləncə</span>
+        <span>›</span>
+        <span id="breadcrumb-title" class="text-[#1E244D] font-medium truncate max-w-[400px]">Məhsul</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="py-6">
+    <div class="container mx-auto px-4 lg:px-0 2xl:max-w-[1226px] xl:max-w-[1226px]">
+
+      <div id="product-loading" class="flex items-center justify-center py-20 text-[#71717A]">
+        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-[#ea207e]"></div>
+        <span class="ml-3 text-[14px]">Məhsul yüklənir...</span>
+      </div>
+
+      <div id="product-main-content" class="hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+          <div class="lg:col-span-5 flex flex-col-reverse sm:flex-row gap-3">
+            
+            <div id="product-thumbnails" class="flex flex-row sm:flex-col gap-2 w-full sm:w-[60px] overflow-x-auto sm:overflow-visible shrink-0 pb-1 sm:pb-0">
+              
+            </div>
+
+            <div class="relative flex-1 bg-white border border-[#f1f2f3] rounded-[14px] p-4 sm:p-6 flex items-center justify-center min-h-[260px] sm:min-h-[380px] shadow-sm">
+              <span id="badge-installment" class="absolute top-4 left-4 bg-[#3164f4] text-white text-[11px] font-bold px-2.5 py-1 rounded-[6px] shadow-sm z-10">18 aylıq taksit</span>
+              <span id="badge-discount" class="absolute bottom-4 left-4 bg-[#ea207e] text-white text-[12px] font-bold px-2.5 py-1 rounded-[6px] shadow-sm z-10 hidden"></span>
+              
+              <div id="badge-credit" class="absolute top-4 right-4 bg-[#ea207e] text-white text-[11px] font-bold w-[72px] h-[72px] rounded-full flex flex-col items-center justify-center text-center p-1 leading-tight shadow-md z-10">
+                <span class="text-[10px]">kreditlə</span>
+                <span class="text-[11px]">ayda <span id="badge-monthly-val">7.15</span></span>
+                <span class="text-[9px]">AZN-dən</span>
+              </div>
+
+              <img id="product-main-img" src="" alt="Product" class="max-h-[320px] max-w-full object-contain mix-blend-multiply transition-all duration-300" />
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 flex flex-col gap-3">
+            <h1 id="product-name" class="text-[20px] lg:text-[22px] font-bold text-[#1E244D] leading-[1.3]"></h1>
+            
+            <div class="flex items-center gap-2 text-[13px]">
+              <div id="product-stars-container" class="flex text-[#ff9800]">
+                
+              </div>
+              <span id="product-avg-rating" class="font-bold text-[#1E244D]">4.0</span>
+              <span class="text-[#DCDDE4]">|</span>
+              <a href="#tabs-section" onclick="switchTab('reviews')" class="text-[#ea207e] hover:underline cursor-pointer">
+                <span id="product-reviews-count">28</span> rəy
+              </a>
+            </div>
+
+            <div class="flex items-center justify-between text-[13px] text-[#71717A] pt-2 border-t border-[#f1f2f3]">
+              <span>Məhsulun kodu: <strong id="product-id-display" class="text-[#1E244D] font-medium">981511</strong></span>
+              
+              <button id="detail-fav-btn" onclick="toggleDetailFavorite()" class="flex items-center gap-1.5 text-[#1E244D] hover:text-[#ea207e] transition-colors cursor-pointer group">
+                <span id="detail-fav-icon">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                </span>
+                <span id="detail-fav-text" class="text-[12px] font-medium">Seçilmişlərə əlavə et</span>
+              </button>
+            </div>
+
+            <div class="mt-2 bg-[#FAFAFC] border border-[#f1f2f3] rounded-[10px] p-4 text-[13px]">
+              <div class="font-bold text-[#1E244D] mb-3">Məhsul haqqında məlumat:</div>
+              <div id="product-short-specs-grid" class="grid grid-cols-2 gap-y-2 text-[#50557A]">
+                <div>Brend:</div>
+                <div id="short-brand" class="font-medium text-[#1E244D]">BirMarket</div>
+
+                <div>Tip:</div>
+                <div id="short-type" class="font-medium text-[#1E244D]">Məhsullar</div>
+              </div>
+              
+              <div class="mt-4 pt-3 border-t border-[#f1f2f3]">
+                <a href="#tabs-section" onclick="switchTab('specs')" class="text-[13px] text-[#ea207e] font-semibold hover:underline cursor-pointer flex items-center gap-1">
+                  <span>Texniki göstəricilərə və təsvirə baxmaq</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-3 flex flex-col gap-4">
+
+            <div class="bg-white border border-[#f1f2f3] rounded-[12px] p-5 shadow-sm">
+              <div class="flex items-baseline gap-2 mb-1">
+                <span id="buybox-price" class="text-[26px] font-extrabold text-[#1E244D]">139.50 <span class="text-[20px] font-normal">₼</span></span>
+                <span id="buybox-old-price" class="text-[#9497AD] text-[15px] line-through hidden">225.00 ₼</span>
+              </div>
+              
+              <div id="buybox-installment-badge" class="bg-[#ffcc00] text-[#1E244D] text-[11px] font-bold px-2 py-0.5 rounded-[4px] w-max mb-4">
+                7.15 ₼ x 24 ay
+              </div>
+
+              <div class="mb-5 pt-3 border-t border-[#f1f2f3]">
+                <div class="flex items-center gap-1.5 text-[13px] font-bold text-[#1E244D] mb-2.5">
+                  <svg width="16" height="16" fill="currentColor" class="text-[#ea207e]" viewBox="0 0 24 24">
+                    <rect x="2" y="4" width="20" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect>
+                    <path d="M6 8h2m4 0h6M6 12h2m4 0h6M6 16h2m4 0h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                  </svg>
+                  <span>Kredit kalkulyatoru</span>
+                </div>
+                
+                <div class="grid grid-cols-4 gap-1.5" id="credit-buttons-group">
+                  <button onclick="selectCreditMonth(6)" data-months="6" class="credit-btn py-1 text-[11px] font-bold border rounded-[6px] transition-all border-[#E5E7EB] hover:border-[#ea207e] text-[#1E244D]">6 ay</button>
+                  <button onclick="selectCreditMonth(12)" data-months="12" class="credit-btn py-1 text-[11px] font-bold border rounded-[6px] transition-all border-[#E5E7EB] hover:border-[#ea207e] text-[#1E244D]">12 ay</button>
+                  <button onclick="selectCreditMonth(18)" data-months="18" class="credit-btn py-1 text-[11px] font-bold border rounded-[6px] transition-all border-[#E5E7EB] hover:border-[#ea207e] text-[#1E244D]">18 ay</button>
+                  <button onclick="selectCreditMonth(24)" data-months="24" class="credit-btn active py-1 text-[11px] font-bold border rounded-[6px] transition-all border-[#ea207e] bg-[#ffcc00] text-[#1E244D]">24 ay</button>
+                </div>
+              </div>
+
+              <button id="add-to-cart-main-btn" onclick="handleBuyboxAddToCart()" class="w-full h-[44px] bg-[#ea207e] hover:bg-[#d41c72] text-white font-bold text-[14px] rounded-[8px] transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                  <circle cx="9" cy="21" r="1"></circle>
+                  <circle cx="20" cy="21" r="1"></circle>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span>Səbətə əlavə et</span>
+              </button>
+            </div>
+
+            <div class="bg-white border border-[#f1f2f3] rounded-[12px] p-4 text-[12px] shadow-sm">
+              <div class="font-bold text-[#1E244D] mb-3 text-[13px]">Digər satıcıların qiymətləri</div>
+              
+              <div class="flex flex-col gap-3.5 divide-y divide-[#f1f2f3]" id="other-sellers-list">
+                
+                <div class="pt-2 first:pt-0">
+                  <div class="flex items-center justify-between">
+                    <span id="other-seller-1-price" class="text-[16px] font-bold text-[#1E244D]">139.50 ₼</span>
+                    <button class="bg-[#fff0f6] text-[#ea207e] hover:bg-[#ffe1ee] font-bold text-[11px] px-3 py-1.5 rounded-[6px] transition-colors flex items-center gap-1">
+                      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                      <span>SƏBƏTƏ AT</span>
+                    </button>
+                  </div>
+                  <div id="other-seller-1-installment" class="text-[11px] text-[#ff9800] font-bold mt-0.5">7.15 ₼ x 24 ay</div>
+                  <div class="text-[11px] text-[#50557A] flex items-center gap-1 mt-1">
+                    <span class="other-seller-delivery">🚚 Kuryerlə, sabah, pulsuz</span>
+                  </div>
+                  <div class="text-[11px] text-[#1E244D] mt-1 flex items-center gap-1">
+                    <span class="font-medium">Bazar Shop</span>
+                    <span class="text-[#00B067] font-bold">👍 95%</span>
+                  </div>
+                </div>
+
+                <div class="pt-3">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <span id="other-seller-2-price" class="text-[16px] font-bold text-[#1E244D]">139.99 ₼</span>
+                      <span id="other-seller-2-old" class="text-[#9497AD] line-through text-[12px] ml-1">225.00 ₼</span>
+                    </div>
+                    <button class="bg-[#fff0f6] text-[#ea207e] hover:bg-[#ffe1ee] font-bold text-[11px] px-3 py-1.5 rounded-[6px] transition-colors flex items-center gap-1">
+                      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                      <span>SƏBƏTƏ AT</span>
+                    </button>
+                  </div>
+                  <div id="other-seller-2-installment" class="text-[11px] text-[#ff9800] font-bold mt-0.5">7.18 ₼ x 24 ay</div>
+                  <div class="text-[11px] text-[#50557A] flex items-center gap-1 mt-1">
+                    <span class="other-seller-delivery">🚚 Kuryerlə, sabah, pulsuz</span>
+                  </div>
+                  <div class="text-[11px] text-[#1E244D] mt-1 flex items-center gap-1">
+                    <span class="font-medium">Metal.az</span>
+                    <span class="text-[#00B067] font-bold">👍 88%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <section class="mt-14 mb-10">
+          <h2 class="text-[20px] font-bold text-[#1E244D] mb-6">Sizi maraqlandıra bilər</h2>
+          <div id="related-products-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            
+          </div>
+          <div class="text-center mt-8">
+            <a href="index.html" class="inline-block border border-[#ea207e] text-[#ea207e] hover:bg-[#ea207e] hover:text-white px-10 py-2.5 rounded-[8px] font-semibold text-[13px] transition-all">
+              Hamısını gör
+            </a>
+          </div>
+        </section>
+
+        <section id="tabs-section" class="mt-12 bg-white border border-[#f1f2f3] rounded-[14px] p-6 lg:p-8 shadow-sm">
+
+          <div class="flex items-center gap-8 border-b border-[#f1f2f3] overflow-x-auto no-scrollbar">
+            <button onclick="switchTab('overview')" id="tab-nav-overview" class="tab-btn active">Ümumi təsvir</button>
+            <button onclick="switchTab('specs')" id="tab-nav-specs" class="tab-btn">Xüsusiyyətlər</button>
+            <button onclick="switchTab('reviews')" id="tab-nav-reviews" class="tab-btn">
+              Məhsul haqqında rəylər və reytinq (<span id="tab-reviews-badge">28</span>)
+            </button>
+            <button onclick="switchTab('warranty')" id="tab-nav-warranty" class="tab-btn">Zəmanət</button>
+            <button onclick="switchTab('returns')" id="tab-nav-returns" class="tab-btn">Qaytarılma</button>
+            <button onclick="switchTab('sellers')" id="tab-nav-sellers" class="tab-btn">Bütün satıcıların qiymətləri (2)</button>
+          </div>
+
+          <div class="mt-8">
+
+            <div id="tab-content-overview" class="tab-pane">
+              
+              <h3 class="text-[18px] font-bold text-[#1E244D] mb-4">Xüsusiyyətlər</h3>
+              <div id="overview-specs-table" class="mb-8">
+                
+              </div>
+
+              <h3 class="text-[18px] font-bold text-[#1E244D] mb-3">Təsvir</h3>
+              <p id="overview-description-text" class="text-[14px] text-[#50557A] leading-[1.7] mb-10 max-w-[900px]">
+                İdman avadanlığı komplekti ümumilikdə 50 kq çəkisi olan iki sökülə bilən qanteldən ibarətdir (hər bir qantel 25 kq ağırlığındadır). Qantellər davamlılıq və istifadənin təhlükəsizliyini təmin edən möhkəm plastikdən hazırlanmışdır. Rəng dizaynı - qara və qırmızı. Bu dəst idmanla məşğul olmaq və əzələləri gücləndirmək üçün idealdır. İstehsalçı - Çin
+              </p>
+
+              <h3 class="text-[18px] font-bold text-[#1E244D] mb-4">Məhsul haqqında rəylər</h3>
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-8 space-y-6" id="overview-reviews-list">
+                  
+                </div>
+
+                <div class="lg:col-span-4 bg-[#FAFAFC] border border-[#f1f2f3] rounded-[12px] p-6 text-right lg:text-left sticky top-20">
+                  <div class="flex items-center gap-3">
+                    <span id="overview-summary-score" class="text-[32px] font-extrabold text-[#1E244D]">4.0</span>
+                    <svg width="24" height="24" fill="#ff9800" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <span id="overview-summary-count" class="text-[13px] text-[#71717A] ml-1">41 reytinq • 28 rəy</span>
+                  </div>
+                  <p class="text-[12px] text-[#71717A] mt-3 leading-[1.6]">
+                    Rəyləri yalnız sifarişi təhvil almış real istifadəçilər yaza bilər. Beləliklə biz etibarlı reytinq formalaşdırırıq
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div id="tab-content-specs" class="tab-pane hidden">
+              <h3 class="text-[18px] font-bold text-[#1E244D] mb-6">Xüsusiyyətlər</h3>
+              <div id="full-specs-table">
+                
+              </div>
+            </div>
+
+            <div id="tab-content-reviews" class="tab-pane hidden">
+              <div class="flex items-center justify-between mb-6 pb-4 border-b border-[#f1f2f3]">
+                <h3 class="text-[18px] font-bold text-[#1E244D]">Məhsul haqqında rəylər</h3>
+                
+                <button class="border border-[#E5E7EB] hover:border-[#ea207e] rounded-[8px] px-3.5 py-1.5 text-[12px] font-semibold text-[#50557A] flex items-center gap-1.5 transition-colors">
+                  <span>⇅ Ən faydalılar</span>
+                </button>
+              </div>
+
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <div class="lg:col-span-8 space-y-6" id="full-reviews-list">
+                  
+                </div>
+
+                <div class="lg:col-span-4 bg-[#FAFAFC] border border-[#f1f2f3] rounded-[12px] p-6 sticky top-20">
+                  <div class="flex items-center gap-3">
+                    <span id="full-summary-score" class="text-[32px] font-extrabold text-[#1E244D]">4.0</span>
+                    <svg width="24" height="24" fill="#ff9800" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <span id="full-summary-count" class="text-[13px] text-[#71717A] ml-1">41 reytinq • 28 rəy</span>
+                  </div>
+                  <p class="text-[12px] text-[#71717A] mt-3 leading-[1.6]">
+                    Rəyləri yalnız sifarişi təhvil almış real istifadəçilər yaza bilər. Beləliklə biz etibarlı reytinq formalaşdırırıq
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div id="tab-content-warranty" class="tab-pane hidden">
+              <h3 class="text-[18px] font-bold text-[#1E244D] mb-4">Zəmanət şərtləri</h3>
+              <div class="bg-[#FAFAFC] border border-[#f1f2f3] rounded-[10px] p-6 max-w-[800px] text-[14px] text-[#50557A] leading-[1.8] space-y-3">
+                <p>• Bu məhsula rəsmi distribütor tərəfindən <strong>12 ay</strong> zəmanət verilir.</p>
+                <p>• Zəmanət müddətində məhsulda yaranan istehsal qüsurları səlahiyyətli servis mərkəzləri tərəfindən ödənişsiz aradan qaldırılır.</p>
+                <p>• Zəmanət talonunu və alış qəbzini zəmanət müddətinin sonunadək saxlamağınız tövsiyə olunur.</p>
+              </div>
+            </div>
+
+            <div id="tab-content-returns" class="tab-pane hidden">
+              <h3 class="text-[18px] font-bold text-[#1E244D] mb-4">Məhsulun geri qaytarılması</h3>
+              <div class="bg-[#FAFAFC] border border-[#f1f2f3] rounded-[10px] p-6 max-w-[800px] text-[14px] text-[#50557A] leading-[1.8] space-y-3">
+                <p>• İstehlakçıların hüquqlarının müdafiəsi haqqında qanuna uyğun olaraq məhsulu <strong>14 gün</strong> ərzində geri qaytara və ya dəyişdirə bilərsiniz.</p>
+                <p>• Məhsul istifadə olunmamış olmalı, əmtəə görünüşü, istehlak xassələri, plombu, fabrikin yarlığı qorunub saxlanılmalıdır.</p>
+                <p>• Qaytarılma Birmarket təhvil məntəqələrində və ya kuryer vasitəsilə həyata keçirilir.</p>
+              </div>
+            </div>
+
+            <div id="tab-content-sellers" class="tab-pane hidden">
+              <h3 class="text-[18px] font-bold text-[#1E244D] mb-4">Bütün satıcıların qiymətləri</h3>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-[13px] border border-[#f1f2f3] rounded-[8px]">
+                  <thead class="bg-[#FAFAFC] border-b border-[#f1f2f3] text-[#71717A]">
+                    <tr>
+                      <th class="p-3.5">Satıcı</th>
+                      <th class="p-3.5">Çatdırılma</th>
+                      <th class="p-3.5">Taksit</th>
+                      <th class="p-3.5">Qiymət</th>
+                      <th class="p-3.5 text-right">Əməliyyat</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sellers-full-table-body" class="divide-y divide-[#f1f2f3]">
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <section class="CurrentTags bg-white py-8 w-full border-t border-b border-[#f1f2f3] mt-12">
+    <div class="container mx-auto 2xl:max-w-[1226px] xl:max-w-[1226px] px-4 lg:px-0">
+      <h3 class="text-[15px] font-bold text-[#1E244D] mb-4">Hazırda aktual olanlar</h3>
+      <div class="flex flex-wrap gap-2.5 items-center">
+        <span class="CurrentTags-Item">redmi note 17 pro max</span>
+        <span class="CurrentTags-Item">iPhone 16 Pro</span>
+        <span class="CurrentTags-Item">Xiaomi 18 pro max</span>
+        <span class="CurrentTags-Item">Kombi</span>
+        <span class="CurrentTags-Item">Iphone 19 pro max</span>
+        <span class="CurrentTags-Item">Iphone 18 pro</span>
+        <span class="CurrentTags-Item">Xiaomi 17</span>
+        <span class="CurrentTags-Item">Kondisionerlər</span>
+        <span class="CurrentTags-Item">Mega endirimlər</span>
+        <span class="CurrentTags-Item">Honor telefonları</span>
+        <span class="CurrentTags-Item">Poco X6 Pro</span>
+        <span class="CurrentTags-Item">Noutbuklar</span>
+        <span class="CurrentTags-Item">Smartfonlar</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="MainFooter bg-white pt-12 pb-16 w-full">
+    <div class="container mx-auto 2xl:max-w-[1226px] xl:max-w-[1226px] px-4 lg:px-0">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-14">
+
+        <div class="flex flex-col">
+          <h3 data-i18n="footer.support_center" class="text-[16px] font-bold text-[#1E244D] mb-4">Dəstək mərkəzi</h3>
+          
+          <a href="javascript:void(0)" class="border border-[#E5E7EB] rounded-[10px] p-3.5 flex items-center justify-between mb-3 hover:border-[#ea207e] transition-all group max-w-[280px]">
+            <div class="flex items-center gap-3">
+              <img src="img/footer-chat.svg" alt="Chat" class="w-7 h-7 object-contain">
+              <span data-i18n="footer.online_support" class="font-bold text-[14px] text-[#1E244D] group-hover:text-[#ea207e] transition-colors">Online dəstək</span>
+            </div>
+            <span class="bg-[#00B067] text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full leading-tight">24/7</span>
+          </a>
+
+          <a href="tel:915" class="border border-[#E5E7EB] rounded-[10px] p-3.5 flex items-center gap-3.5 mb-8 hover:border-[#ea207e] transition-all group max-w-[280px]">
+            <img src="img/new-phone.svg" alt="Phone" class="w-7 h-7 object-contain">
+            <div>
+              <div class="font-bold text-[17px] text-[#1E244D] leading-tight mb-1 group-hover:text-[#ea207e] transition-colors">915</div>
+              <div data-i18n="footer.daily_hours" class="text-[12px] text-[#71717A]">Hər gün: 9:00 – 00:00</div>
+            </div>
+          </a>
+
+          <h3 data-i18n="footer.follow_us" class="text-[16px] font-bold text-[#1E244D] mb-4">Bizi izləyin</h3>
+          <ul class="space-y-3">
+            <li>
+              <a href="javascript:void(0)" class="inline-flex items-center gap-3 text-[14px] text-[#1E244D] hover:text-[#ea207e] transition-colors">
+                <img src="img/footer-whatsapp.svg" alt="Whatsapp" class="w-5 h-5 object-contain">
+                <span data-i18n="footer.whatsapp">Whatsapp kanal</span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="inline-flex items-center gap-3 text-[14px] text-[#1E244D] hover:text-[#ea207e] transition-colors">
+                <img src="img/telegram-desktop.svg" alt="Telegram" class="w-5 h-5 object-contain">
+                <span data-i18n="footer.telegram">Telegram kanal</span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="inline-flex items-center gap-3 text-[14px] text-[#1E244D] hover:text-[#ea207e] transition-colors">
+                <img src="img/footer-instagram.svg" alt="Instagram" class="w-5 h-5 object-contain">
+                <span data-i18n="footer.instagram">Instagram Birmarket</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 data-i18n="footer.for_customers" class="text-[16px] font-bold text-[#1E244D] mb-4">Müştərilər üçün</h3>
+          <ul class="space-y-3">
+            <li><a href="javascript:void(0)" data-i18n="footer.how_to_order" class="text-[14px] text-[#474D66] hover:text-[#ea207e] transition-colors">Birmarket-də necə sifariş etmək olar</a></li>
+            <li><a href="javascript:void(0)" data-i18n="footer.delivery_payment" class="text-[14px] text-[#474D66] hover:text-[#ea207e] transition-colors">Çatdırılma və ödəmə</a></li>
+            <li><a href="javascript:void(0)" data-i18n="footer.credit" class="text-[14px] text-[#474D66] hover:text-[#ea207e] transition-colors">Kredit</a></li>
+            <li><a href="javascript:void(0)" data-i18n="footer.installment" class="text-[14px] text-[#474D66] hover:text-[#ea207e] transition-colors">Taksitli ödəniş</a></li>
+            <li><a href="javascript:void(0)" data-i18n="footer.return_policy" class="text-[14px] text-[#474D66] hover:text-[#ea207e] transition-colors">Məhsulun geri qaytarılması</a></li>
+            <li><a href="javascript:void(0)" data-i18n="footer.faq" class="text-[14px] text-[#474D66] hover:text-[#ea207e] transition-colors">Ən çox verilən suallar</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="mb-8">
+            <h3 data-i18n="footer.for_partners" class="text-[16px] font-bold text-[#1E244D] mb-4">Tərəfdaşlar üçün Birmarket</h3>
+            <ul class="space-y-3">
+              <li><a href="javascript:void(0)" data-i18n="footer.start_selling" class="text-[14px] text-[#474D66] hover:text-[#ea207e] transition-colors">Birmarket-də satışa necə başlamaq olar</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 data-i18n="footer.company" class="text-[16px] font-bold text-[#1E244D] mb-4">Şirkət</h3>
+            <ul class="space-y-3">
+              <li><a href="javascript:void(0)" data-i18n="footer.terms_birmarket" class="text-[14px] text-[#474D66] hover:text-[#ea207e] transition-colors">İstifadə şərtləri (ictimai oferta) Birmarket</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-16 pt-8 text-center flex flex-col items-center gap-2">
+        <p data-i18n="footer.tagline" class="text-[12px] text-[#8C93A4]">Birmarket – hər zaman sərfəli qiymətlər!</p>
+        <div class="flex items-center gap-3 mt-3 text-[13px] font-bold">
+          <span id="footer-lang-az" class="cursor-pointer text-[#1E244D] font-bold transition-colors">AZ</span>
+          <span id="footer-lang-ru" class="cursor-pointer text-[#8C93A4] font-normal hover:text-[#1E244D] transition-colors">RU</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <section class="w-full relative overflow-visible mt-24" style="background: linear-gradient(90deg, #e7207e 0%, #f37db6 100%);">
+    <div class="container mx-auto 2xl:max-w-[1226px] xl:max-w-[1226px] px-4 flex items-center justify-center gap-10 lg:gap-20 h-[90px] relative overflow-visible">
+
+      <h2 class="text-white text-[26px] lg:text-[30px] font-bold whitespace-nowrap tracking-tight">
+        Yoxla, sevəcəksən!
+      </h2>
+
+      <div class="flex flex-col items-center gap-2">
+        <a href="javascript:void(0)" target="_blank" class="inline-flex items-center justify-center bg-white text-[#ea207e] font-bold text-[13px] px-6 py-1.5 rounded-full shadow-sm hover:bg-[#fff5f8] transition-all whitespace-nowrap">
+          Tətbiqi yüklə
+        </a>
+
+        <div class="flex items-center gap-2">
+          <a href="https://play.google.com/store/apps" target="_blank" class="transition-transform hover:scale-105 inline-block">
+            <img src="img/google-play.svg" alt="Google Play" class="h-[25px] w-auto">
+          </a>
+          <a href="https://apple.com/app-store" target="_blank" class="transition-transform hover:scale-105 inline-block">
+            <img src="img/app-store.svg" alt="App Store" class="h-[25px] w-auto">
+          </a>
+          <a href="https://appgallery.huawei.com" target="_blank" class="transition-transform hover:scale-105 inline-block">
+            <img src="img/huawei-app-gallery.svg" alt="AppGallery" class="h-[25px] w-auto">
+          </a>
+        </div>
+      </div>
+
+      <div class="hidden sm:block pointer-events-none relative w-[135px] lg:w-[145px] shrink-0 h-full">
+        <img src="img/birmarket_app_store_az.webp" alt="Birmarket Tətbiq" class="absolute bottom-0 left-0 h-[225px] lg:h-[240px] max-w-none object-contain object-bottom drop-shadow-xl z-20">
+      </div>
+
+    </div>
+  </section>
+
+  <div id="burger-drawer-backdrop" class="burger-drawer-backdrop">
+    <div class="burger-drawer-panel" onclick="event.stopPropagation()">
+      
+      <div class="px-5 py-4 flex items-center justify-between">
+        <a href="index.html" class="flex items-center">
+          <svg width="128" height="26" viewBox="0 0 140 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M44.061 4.27197C45.1347 4.27197 45.9347 4.93564 45.9347 5.93115V6.11781C45.9347 7.12368 45.1347 7.77698 44.061 7.77698C42.9873 7.77698 42.1558 7.11331 42.1558 6.11781V5.93115C42.1558 4.92527 42.9873 4.27197 44.061 4.27197Z" fill="#EA207E"></path>
+            <path d="M131.53 15.4919C131.53 11.8003 129.12 9.073 125.288 9.073C121.456 9.073 118.667 11.9247 118.667 15.7201V16.6948C118.667 20.4176 121.404 23.373 125.414 23.373C128.067 23.373 130.183 22.2116 131.52 19.754L129.13 18.437C128.162 20.0754 127.014 20.7909 125.383 20.7909C123.13 20.7909 121.604 19.4221 121.467 16.9126H131.52V15.4919H131.53ZM121.593 14.6727C121.941 12.6921 123.204 11.5618 125.288 11.5618C127.593 11.5618 128.562 13.1691 128.614 14.6727H121.593Z" fill="#EA207E"></path>
+            <path d="M91.006 9.39446V11.0536C90.0376 9.86111 88.4586 9.073 86.585 9.073C82.9955 9.073 80.1323 11.8729 80.1323 15.7823V16.6845C80.1323 20.5939 82.9955 23.3938 86.585 23.3938C88.4586 23.3938 90.0376 22.6057 91.006 21.4131V23.0723H93.9534V9.39446H91.006ZM91.006 16.5497C91.006 19.1318 89.4797 20.8013 87.0692 20.8013C84.6586 20.8013 83.1323 19.1421 83.1323 16.5497V15.9171C83.1323 13.335 84.6586 11.6655 87.0692 11.6655C89.4797 11.6655 91.006 13.3246 91.006 15.9171V16.5497Z" fill="#EA207E"></path>
+            <path d="M34.2088 9.08339C32.3352 9.08339 30.7564 9.87146 29.788 11.0639V4.59351H26.8408V16.5804C26.8408 20.8525 29.8722 23.393 33.7036 23.393C37.7454 23.393 40.6716 20.5725 40.6716 16.6841V15.813C40.6716 11.8831 37.8086 9.08339 34.2193 9.08339H34.2088ZM37.7244 16.6322C37.7244 19.1105 36.1666 20.8006 33.7562 20.8006C31.3458 20.8006 29.788 19.1623 29.788 16.6322V15.9167C29.788 13.3348 31.3458 11.6653 33.7562 11.6653C36.1666 11.6653 37.7244 13.3244 37.7244 15.9167V16.6322Z" fill="#EA207E"></path>
+            <path d="M109.225 15.2531L114.825 9.39447H118.656L113.088 14.942L119.193 23.0715H115.572L111.078 16.9225L109.225 18.7372V23.0715H106.278V4.59351H109.225V15.2531Z" fill="#EA207E"></path>
+            <path d="M102.858 9.08337C103.658 9.08337 104.384 9.27003 104.973 9.63297L104.279 12.2773C103.742 12.0388 103.205 11.8832 102.563 11.8832C100.689 11.8832 99.2682 13.3039 99.2682 15.689V23.0827H96.3208V9.39446H99.2682V11.2921C100.068 9.68482 101.416 9.073 102.858 9.073V9.08337Z" fill="#EA207E"></path>
+            <path d="M73.4483 9.08337C76.6061 9.08337 78.5428 11.1987 78.5428 14.8383V23.0715H75.5956V14.9109C75.5956 12.9096 74.6799 11.6653 72.9747 11.6653C71.0695 11.6653 69.9749 12.9822 69.9749 15.0975V23.0715H67.0277V15.0975C67.0277 12.9822 66.2277 11.6653 64.3752 11.6653C62.6069 11.6653 61.3964 12.9822 61.3964 15.1805V23.0715H58.4492V9.39444H61.3964V11.1054C62.1437 9.97512 63.3752 9.073 65.2593 9.073C67.1329 9.073 68.5539 10.0996 69.196 11.5824C69.9222 10.2344 71.2906 9.073 73.4589 9.073L73.4483 9.08337Z" fill="#EA207E"></path>
+            <path d="M54.9128 9.08337C55.7128 9.08337 56.4391 9.27003 57.0286 9.63297L56.3339 12.2773C55.797 12.0388 55.2602 11.8832 54.6181 11.8832C52.7444 11.8832 51.3233 13.3039 51.3233 15.689V23.0827H48.376V9.39446H51.3233V11.2921C52.1233 9.68482 53.4707 9.073 54.9128 9.073V9.08337Z" fill="#EA207E"></path>
+            <path d="M45.5348 9.39453H42.5874V23.0724H45.5348V9.39453Z" fill="#EA207E"></path>
+            <path d="M137.466 9.39467H140.002V11.9766H137.466V14.7245V19.2558C137.466 20.2617 137.918 20.5727 138.75 20.5727C139.013 20.5727 139.181 20.5416 139.371 20.4898L139.665 22.968C139.286 23.1028 138.865 23.1547 138.35 23.1547C135.887 23.1547 134.518 21.8067 134.518 19.0899V17.659V11.9662H132.087V9.38431H134.518V5.4751H137.466V9.38431V9.39467Z" fill="#EA207E"></path>
+            <path d="M17.683 13.1271L10.315 0.694345C9.76766 -0.228519 8.42037 -0.228519 7.87303 0.694345L0.515569 13.1271C-0.168601 14.2781 -0.168601 15.709 0.515569 16.8704L7.88356 29.3135C8.4309 30.2363 9.77819 30.2363 10.3255 29.3135L17.6935 16.8704C18.3777 15.7194 18.3777 14.2884 17.6935 13.1271H17.683ZM13.9148 16.0616L9.39926 23.5585C9.26243 23.7867 8.9256 23.7867 8.78877 23.5585L4.27324 16.0616C3.87327 15.4083 3.87327 14.5891 4.27324 13.9359L8.78877 6.43891C8.9256 6.21079 9.26243 6.21079 9.39926 6.43891L13.9148 13.9359C14.3148 14.5891 14.3148 15.4083 13.9148 16.0616Z" fill="#EA207E"></path>
+          </svg>
+        </a>
+        <div class="flex items-center gap-4">
+          <a href="favorites.html" class="text-[#1E244D] hover:text-[#EA207E] transition-colors relative flex items-center justify-center" aria-label="Seçilmişlər">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+            </svg>
+            <span class="mobile-fav-badge hidden absolute -top-1.5 -right-2 bg-[#EA207E] text-white text-[10px] font-bold w-[16px] h-[16px] rounded-full flex items-center justify-center leading-none">0</span>
+          </a>
+          <a href="cart.html" class="text-[#1E244D] hover:text-[#EA207E] transition-colors relative flex items-center justify-center" aria-label="Səbət">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="8" cy="21" r="1"></circle>
+              <circle cx="19" cy="21" r="1"></circle>
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+            </svg>
+            <span class="drawer-cart-badge bg-[#EA207E] text-white text-[10px] font-bold min-w-[17px] h-[17px] px-1 rounded-full flex items-center justify-center leading-none absolute -top-1.5 -right-2">2</span>
+          </a>
+          <button onclick="closeBurgerMenu(event)" class="text-[#50557A] hover:text-[#1E244D] transition-colors p-1 flex items-center justify-center cursor-pointer ml-1" aria-label="Bağla">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="px-5 py-3 flex flex-col space-y-6">
+        
+        <div>
+          <div onclick="toggleDrawerPhone()" class="flex items-center justify-between cursor-pointer select-none py-1 group">
+            <div class="flex items-center gap-3.5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E244D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="group-hover:text-[#EA207E] transition-colors">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <span class="text-[15px] font-bold text-[#1E244D] group-hover:text-[#EA207E] transition-colors">915</span>
+            </div>
+            <svg id="drawer-phone-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#50557A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div id="drawer-phone-dropdown" class="hidden pl-8 pt-2 space-y-1 text-[13px] text-[#50557A]">
+            <a href="tel:915" class="block font-bold text-[#EA207E] text-[15px]">915 (Qısa nömrə)</a>
+            <a href="tel:+994122100021" class="block hover:text-[#1E244D] font-medium">+994 12 210 00 21</a>
+            <div class="text-[12px] text-[#71717A]">İş saatları: 09:00 – 00:00</div>
+          </div>
+        </div>
+
+        <div>
+          <div onclick="toggleDrawerLangMenu()" class="flex items-center justify-between cursor-pointer select-none py-1 group">
+            <div class="flex items-center gap-3.5">
+              <img id="drawer-current-flag" src="img/flag_az.svg" class="w-5 h-auto rounded-xs object-cover" alt="AZ">
+              <span id="drawer-current-lang-text" class="text-[15px] font-bold text-[#1E244D] group-hover:text-[#EA207E] transition-colors">AZ</span>
+            </div>
+            <svg id="drawer-lang-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#50557A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+          <div id="drawer-lang-dropdown" class="hidden pl-8 pt-2 space-y-2 text-[13px]">
+            <div onclick="selectDrawerLang('az')" class="flex items-center gap-2 cursor-pointer font-bold text-[#EA207E]">
+              <img src="img/flag_az.svg" class="w-4 h-auto" alt="AZ">
+              <span>AZ (Azərbaycan)</span>
+            </div>
+            <div onclick="selectDrawerLang('ru')" class="flex items-center gap-2 cursor-pointer font-medium text-[#1E244D] hover:text-[#EA207E]">
+              <img src="img/flag_ru.svg" class="w-4 h-auto" alt="RU">
+              <span>RU (Русский)</span>
+            </div>
+          </div>
+        </div>
+
+        <a href="auth.html" class="flex items-center gap-3.5 py-1 text-[#1E244D] hover:text-[#EA207E] transition-colors group">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E244D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="group-hover:text-[#EA207E] transition-colors">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span class="text-[15px] font-bold" data-i18n="header.login">Qeydiyyat | Giriş</span>
+        </a>
+
+        <a href="javascript:void(0)" class="block py-1 text-[15px] font-bold text-[#1E244D] hover:text-[#EA207E] transition-colors" data-i18n="header.delivery">
+          Çatdırılma və ödəmə
+        </a>
+
+        <a href="javascript:void(0)" class="block py-1 text-[15px] font-bold text-[#1E244D] hover:text-[#EA207E] transition-colors" data-i18n="header.returns">
+          Qaytarılma
+        </a>
+
+        <a href="javascript:void(0)" class="block py-1 text-[15px] font-bold text-[#1E244D] hover:text-[#EA207E] transition-colors" data-i18n="header.warranty">
+          Zəmanət
+        </a>
+
+        <a href="javascript:void(0)" target="_blank" class="block py-1 text-[15px] font-bold text-[#1E244D] hover:text-[#EA207E] transition-colors">
+          Birmarket-də satın
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <nav class="mobile-bottom-nav">
+    <a href="index.html" class="mobile-nav-item" id="nav-item-home">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+      </svg>
+      <span>Əsas</span>
+    </a>
+    <button onclick="openBurgerMenu(); toggleBurgerCategories(true);" class="mobile-nav-item border-none bg-transparent cursor-pointer" id="nav-item-catalog">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"></rect>
+        <rect x="14" y="3" width="7" height="7"></rect>
+        <rect x="14" y="14" width="7" height="7"></rect>
+        <rect x="3" y="14" width="7" height="7"></rect>
+      </svg>
+      <span data-i18n="header.catalog">Kataloq</span>
+    </button>
+    <a href="favorites.html" class="mobile-nav-item" id="nav-item-fav">
+      <div class="relative flex items-center justify-center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+        </svg>
+        <span class="mobile-fav-badge hidden">0</span>
+      </div>
+      <span data-i18n="header.favorites">Seçilmişlər</span>
+    </a>
+    <a href="cart.html" class="mobile-nav-item" id="nav-item-cart">
+      <div class="relative flex items-center justify-center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="8" cy="21" r="1"></circle>
+          <circle cx="19" cy="21" r="1"></circle>
+          <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+        </svg>
+        <span class="mobile-cart-badge hidden">0</span>
+      </div>
+      <span data-i18n="header.cart">Səbət</span>
+    </a>
+    <button onclick="openBurgerMenu()" class="mobile-nav-item border-none bg-transparent cursor-pointer" id="nav-item-menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" x2="20" y1="12" y2="12"></line>
+        <line x1="4" x2="20" y1="6" y2="6"></line>
+        <line x1="4" x2="20" y1="18" y2="18"></line>
+      </svg>
+      <span>Menyu</span>
+    </button>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="i18n.js"></script>
+  <script src="script.js"></script>
+  <script src="product.js"></script>
+</body>
+
+</html>
