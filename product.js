@@ -1,3 +1,9 @@
+try {
+    if (window.location.pathname.endsWith('/index.html')) {
+        window.history.replaceState(null, '', window.location.pathname.replace(/\/index\.html$/, '/') + window.location.search + window.location.hash);
+    }
+} catch (e) {}
+
 let currentProduct = null;
 let currentReviews = [];
 let allCatalogProducts = [];
@@ -745,7 +751,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('product-loading').innerHTML = `
             <div class="text-center py-12">
                 <p class="text-[#EA207E] font-bold text-[16px] mb-2">Məhsul tapılmadı</p>
-                <a href="index.html" class="text-[13px] text-[#50557A] underline">Ana səhifəyə qayıt</a>
+                <a href="./" class="text-[13px] text-[#50557A] underline">Ana səhifəyə qayıt</a>
             </div>
         `;
     }
@@ -784,7 +790,7 @@ document.addEventListener('click', function(e) {
         return;
     }
     if (href.startsWith('tel:') || href.startsWith('mailto:') || href.startsWith('#')) return;
-    const allowed = ['index.html', 'cart.html', 'product.html', 'favorites.html', 'auth.html', './'];
+    const allowed = ['index.html', 'cart.html', 'product.html', 'favorites.html', 'auth.html', './', '/'];
     const isAllowed = allowed.some(page => href === page || href.startsWith(page + '?') || href.startsWith(page + '#'));
     if (!isAllowed) {
         e.preventDefault();

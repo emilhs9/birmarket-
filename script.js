@@ -1,3 +1,9 @@
+try {
+    if (window.location.pathname.endsWith('/index.html')) {
+        window.history.replaceState(null, '', window.location.pathname.replace(/\/index\.html$/, '/') + window.location.search + window.location.hash);
+    }
+} catch (e) {}
+
 const aktualitems = [
     {
         title: "Telefonlar, Smart cihazlar və telefon aksessuarları",
@@ -1195,7 +1201,7 @@ function executeSearch(query) {
     const isIndexPage = !!document.getElementById('search-results-section');
 
     if (!isIndexPage) {
-        window.location.href = `index.html?q=${encodeURIComponent(q)}`;
+        window.location.href = `./?q=${encodeURIComponent(q)}`;
         return;
     }
 
@@ -1534,7 +1540,7 @@ document.addEventListener('click', function(e) {
         return;
     }
     if (href.startsWith('tel:') || href.startsWith('mailto:')) return;
-    const allowed = ['index.html', 'cart.html', 'product.html', 'favorites.html', 'auth.html', './'];
+    const allowed = ['index.html', 'cart.html', 'product.html', 'favorites.html', 'auth.html', './', '/'];
     const isAllowed = allowed.some(page => href === page || href.startsWith(page + '?') || href.startsWith(page + '#'));
     if (!isAllowed) {
         e.preventDefault();
