@@ -149,12 +149,29 @@ function renderReviewSingleStars(starsCount) {
 
 async function fetchAllCatalogProducts() {
     try {
-        const [salesRes, megaRes, topRes, customRes] = await Promise.all([
-            fetch('salesofday.json').then(r => r.json()).catch(() => ({ products: [] })),
-            fetch('megadiscounts.json').then(r => r.json()).catch(() => ({ products: [] })),
-            fetch('top.json').then(r => r.json()).catch(() => ({ products: [] })),
-            fetch('products.json').then(r => r.json()).catch(() => ({ discountedProducts: [], newProducts: [], bestSellerProducts: [] }))
-        ]);
+        let salesRes = { products: [] };
+        let megaRes = { products: [] };
+        let topRes = { products: [] };
+        let customRes = { discountedProducts: [], newProducts: [], bestSellerProducts: [] };
+
+        if (window.BIRMARKET_DATA) {
+            customRes = {
+                discountedProducts: window.BIRMARKET_DATA.discountedProducts || [],
+                newProducts: window.BIRMARKET_DATA.newProducts || [],
+                bestSellerProducts: window.BIRMARKET_DATA.bestSellerProducts || []
+            };
+            megaRes = { products: window.BIRMARKET_DATA.megaProducts || [] };
+            topRes = { products: window.BIRMARKET_DATA.topProducts || [] };
+            salesRes = { products: window.BIRMARKET_DATA.discountedProducts || [] };
+        } else {
+            const [s, m, t, c] = await Promise.all([
+                fetch('salesofday.json').then(r => r.json()).catch(() => ({ products: [] })),
+                fetch('megadiscounts.json').then(r => r.json()).catch(() => ({ products: [] })),
+                fetch('top.json').then(r => r.json()).catch(() => ({ products: [] })),
+                fetch('products.json').then(r => r.json()).catch(() => ({ discountedProducts: [], newProducts: [], bestSellerProducts: [] }))
+            ]);
+            salesRes = s; megaRes = m; topRes = t; customRes = c;
+        }
 
         const disc = (customRes.discountedProducts || []).map(p => ({
             ...p,

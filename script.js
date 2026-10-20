@@ -402,67 +402,76 @@ function createProductCard(rawProduct, options = {}) {
     `;
 }
 
+function safeInitSwiper(selector, options) {
+    if (typeof Swiper === 'undefined') return null;
+    const el = typeof selector === 'string' ? document.querySelector(selector) : selector;
+    if (!el) return null;
+    try {
+        return new Swiper(el, options);
+    } catch (e) {
+        console.warn('Swiper init error for ' + selector + ':', e);
+        return null;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     updateFavoritesCount();
     updateCartBadge();
-    if (document.querySelector('.mainSwiper')) {
-        new Swiper('.mainSwiper', {
-            loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.custom-pagination',
-                clickable: true,
-            },
-        });
-    }
+    safeInitSwiper('.mainSwiper', {
+        loop: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.custom-pagination',
+            clickable: true,
+        },
+    });
 });
 
+let saleSwiperInstance = null;
+function renderSaleOfDay(products) {
+    const wrapper = document.getElementById('sale-swiper-wrapper');
+    if (!wrapper) return;
+    wrapper.innerHTML = products.map(product => createProductCard(product, { isSlider: true, showTimer: true })).join('');
+    if (saleSwiperInstance) {
+        try { saleSwiperInstance.destroy(true, true); } catch(e) {}
+    }
+    saleSwiperInstance = safeInitSwiper('.saleSwiper', {
+        slidesPerView: 'auto',
+        spaceBetween: 16,
+        navigation: {
+            nextEl: '.sale-button-next',
+            prevEl: '.sale-button-prev',
+        },
+        pagination: {
+            el: '.sale-pagination',
+            clickable: true,
+        },
+    });
+}
+
 function initSaleOfDay() {
+    const pool = (window.BIRMARKET_DATA && window.BIRMARKET_DATA.discountedProducts) || [];
+    if (pool.length > 0) {
+        const products = pool.map(p => ({ ...p, id: `disc_${p.id}` }));
+        renderSaleOfDay(products);
+    }
     fetch("products.json")
         .then(response => response.json())
         .then(data => {
-            const wrapper = document.getElementById('sale-swiper-wrapper');
-            if (!wrapper) return;
-
             const rawProducts = data.discountedProducts || [];
-            const products = rawProducts.map(p => ({ ...p, id: `disc_${p.id}` }));
-            wrapper.innerHTML = products.map(product => createProductCard(product, { isSlider: true, showTimer: true })).join('');
-
-            if (document.querySelector('.saleSwiper')) {
-                new Swiper('.saleSwiper', {
-                    slidesPerView: 'auto',
-                    spaceBetween: 16,
-                    navigation: {
-                        nextEl: '.sale-button-next',
-                        prevEl: '.sale-button-prev',
-                    },
-                    pagination: {
-                        el: '.sale-pagination',
-                        clickable: true,
-                    },
-                });
+            if (rawProducts.length > 0) {
+                const products = rawProducts.map(p => ({ ...p, id: `disc_${p.id}` }));
+                renderSaleOfDay(products);
             }
         })
-        .catch(err => {
-            console.warn("products.json xətası, salesofday.json-a keçilir:", err);
-            fetch("salesofday.json")
-                .then(r => r.json())
-                .then(data => {
-                    const wrapper = document.getElementById('sale-swiper-wrapper');
-                    if (!wrapper) return;
-                    const products = data.products || [];
-                    wrapper.innerHTML = products.map(product => createProductCard(product, { isSlider: true, showTimer: true })).join('');
-                })
-                .catch(e => console.error("Günün endirimi API xətası:", e));
-        });
+        .catch(() => {});
 }
 
 function initBrandsSwiper() {
-    if (!document.querySelector('.brandsSwiper')) return;
-    new Swiper('.brandsSwiper', {
+    safeInitSwiper('.brandsSwiper', {
         slidesPerView: 2,
         slidesPerGroup: 2,
         spaceBetween: 10,
@@ -475,28 +484,15 @@ function initBrandsSwiper() {
             clickable: true,
         },
         breakpoints: {
-            640: {
-                slidesPerView: 3,
-                slidesPerGroup: 3,
-                spaceBetween: 12,
-            },
-            768: {
-                slidesPerView: 4,
-                slidesPerGroup: 4,
-                spaceBetween: 12,
-            },
-            1024: {
-                slidesPerView: 5,
-                slidesPerGroup: 5,
-                spaceBetween: 16,
-            }
+            640: { slidesPerView: 3, slidesPerGroup: 3, spaceBetween: 12 },
+            768: { slidesPerView: 4, slidesPerGroup: 4, spaceBetween: 12 },
+            1024: { slidesPerView: 5, slidesPerGroup: 5, spaceBetween: 16 }
         }
     });
 }
 
 function initSellersSwiper() {
-    if (!document.querySelector('.sellersSwiper')) return;
-    new Swiper('.sellersSwiper', {
+    safeInitSwiper('.sellersSwiper', {
         slidesPerView: 2,
         slidesPerGroup: 2,
         spaceBetween: 10,
@@ -509,21 +505,9 @@ function initSellersSwiper() {
             clickable: true,
         },
         breakpoints: {
-            640: {
-                slidesPerView: 3,
-                slidesPerGroup: 3,
-                spaceBetween: 12,
-            },
-            768: {
-                slidesPerView: 4,
-                slidesPerGroup: 4,
-                spaceBetween: 12,
-            },
-            1024: {
-                slidesPerView: 5,
-                slidesPerGroup: 5,
-                spaceBetween: 16,
-            }
+            640: { slidesPerView: 3, slidesPerGroup: 3, spaceBetween: 12 },
+            768: { slidesPerView: 4, slidesPerGroup: 4, spaceBetween: 12 },
+            1024: { slidesPerView: 5, slidesPerGroup: 5, spaceBetween: 16 }
         }
     });
 }
@@ -535,24 +519,21 @@ function renderBestSellers(products) {
 }
 
 function initBestSellers() {
+    const pool = (window.BIRMARKET_DATA && window.BIRMARKET_DATA.bestSellerProducts) || [];
+    if (pool.length > 0) {
+        window.cachedBestSellers = pool.map(p => ({ ...p, id: `best_${p.id}` }));
+        renderBestSellers(window.cachedBestSellers);
+    }
     fetch("products.json")
         .then(response => response.json())
         .then(data => {
             const rawProducts = data.bestSellerProducts || [];
-            const products = rawProducts.map(p => ({ ...p, id: `best_${p.id}` }));
-            window.cachedBestSellers = products;
-            renderBestSellers(window.cachedBestSellers);
+            if (rawProducts.length > 0) {
+                window.cachedBestSellers = rawProducts.map(p => ({ ...p, id: `best_${p.id}` }));
+                renderBestSellers(window.cachedBestSellers);
+            }
         })
-        .catch(err => {
-            console.warn("products.json xətası, top.json-a keçilir:", err);
-            fetch("top.json")
-                .then(r => r.json())
-                .then(data => {
-                    window.cachedBestSellers = data.products || [];
-                    renderBestSellers(window.cachedBestSellers);
-                })
-                .catch(e => console.error("Ən çox satılanlar API xətası:", e));
-        });
+        .catch(() => {});
 }
 
 let newSwiperInstance = null;
@@ -568,42 +549,46 @@ function renderNewProducts(products) {
     })).join('');
 
     if (newSwiperInstance) {
-        newSwiperInstance.destroy(true, true);
+        try { newSwiperInstance.destroy(true, true); } catch(e) {}
     }
 
-    if (document.querySelector('.newSwiper')) {
-        newSwiperInstance = new Swiper('.newSwiper', {
-            slidesPerView: 'auto',
-            spaceBetween: 16,
-            navigation: {
-                nextEl: '.new-button-next',
-                prevEl: '.new-button-prev',
-            },
-            pagination: {
-                el: '.new-pagination',
-                clickable: true,
-            },
-            breakpoints: {
-                1280: {
-                    slidesPerView: 5,
-                    slidesPerGroup: 5,
-                    spaceBetween: 16
-                }
+    newSwiperInstance = safeInitSwiper('.newSwiper', {
+        slidesPerView: 'auto',
+        spaceBetween: 16,
+        navigation: {
+            nextEl: '.new-button-next',
+            prevEl: '.new-button-prev',
+        },
+        pagination: {
+            el: '.new-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            1280: {
+                slidesPerView: 5,
+                slidesPerGroup: 5,
+                spaceBetween: 16
             }
-        });
-    }
+        }
+    });
 }
 
 function initNewProducts() {
+    const pool = (window.BIRMARKET_DATA && window.BIRMARKET_DATA.newProducts) || [];
+    if (pool.length > 0) {
+        window.cachedNewProducts = pool.map(p => ({ ...p, id: `new_${p.id}` }));
+        renderNewProducts(window.cachedNewProducts);
+    }
     fetch("products.json")
         .then(response => response.json())
         .then(data => {
             const rawProducts = data.newProducts || [];
-            const products = rawProducts.map(p => ({ ...p, id: `new_${p.id}` }));
-            window.cachedNewProducts = products;
-            renderNewProducts(window.cachedNewProducts);
+            if (rawProducts.length > 0) {
+                window.cachedNewProducts = rawProducts.map(p => ({ ...p, id: `new_${p.id}` }));
+                renderNewProducts(window.cachedNewProducts);
+            }
         })
-        .catch(err => console.error("Yeni məhsullar xətası:", err));
+        .catch(() => {});
 }
 
 const aktualTitlesRu = {
@@ -652,10 +637,10 @@ function renderMegaProducts(products) {
     })).join('');
 
     if (megaSwiperInstance) {
-        megaSwiperInstance.destroy(true, true);
+        try { megaSwiperInstance.destroy(true, true); } catch(e) {}
     }
 
-    megaSwiperInstance = new Swiper('.megaSwiper', {
+    megaSwiperInstance = safeInitSwiper('.megaSwiper', {
         slidesPerView: 'auto',
         spaceBetween: 16,
         navigation: {
@@ -677,13 +662,20 @@ function renderMegaProducts(products) {
 }
 
 function initMegaDiscounts() {
+    const pool = (window.BIRMARKET_DATA && window.BIRMARKET_DATA.megaProducts) || [];
+    if (pool.length > 0) {
+        window.cachedMegaProducts = pool;
+        renderMegaProducts(window.cachedMegaProducts);
+    }
     fetch("megadiscounts.json")
         .then(response => response.json())
         .then(data => {
-            window.cachedMegaProducts = data.products || [];
-            renderMegaProducts(window.cachedMegaProducts);
+            if (data.products && data.products.length > 0) {
+                window.cachedMegaProducts = data.products;
+                renderMegaProducts(window.cachedMegaProducts);
+            }
         })
-        .catch(err => console.error("Mega endirimlər xətası:", err));
+        .catch(() => {});
 }
 
 let recentSwiperInstance = null;
@@ -699,30 +691,28 @@ function renderRecentlyViewed(products) {
     })).join('');
 
     if (recentSwiperInstance) {
-        recentSwiperInstance.destroy(true, true);
+        try { recentSwiperInstance.destroy(true, true); } catch(e) {}
     }
 
-    if (document.querySelector('.recentSwiper')) {
-        recentSwiperInstance = new Swiper('.recentSwiper', {
-            slidesPerView: 'auto',
-            spaceBetween: 16,
-            navigation: {
-                nextEl: '.recent-button-next',
-                prevEl: '.recent-button-prev',
-            },
-            pagination: {
-                el: '.recent-pagination',
-                clickable: true,
-            },
-            breakpoints: {
-                1280: {
-                    slidesPerView: 5,
-                    slidesPerGroup: 5,
-                    spaceBetween: 16
-                }
+    recentSwiperInstance = safeInitSwiper('.recentSwiper', {
+        slidesPerView: 'auto',
+        spaceBetween: 16,
+        navigation: {
+            nextEl: '.recent-button-next',
+            prevEl: '.recent-button-prev',
+        },
+        pagination: {
+            el: '.recent-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            1280: {
+                slidesPerView: 5,
+                slidesPerGroup: 5,
+                spaceBetween: 16
             }
-        });
-    }
+        }
+    });
 }
 
 function initRecentlyViewed() {
@@ -736,18 +726,13 @@ function initRecentlyViewed() {
     if (viewed && viewed.length >= 4) {
         window.cachedRecentlyViewed = viewed;
         renderRecentlyViewed(window.cachedRecentlyViewed);
-    } else {
-        fetch("top.json")
-            .then(res => res.json())
-            .then(data => {
-                const sample = (data.products || []).slice(0, 10).map(p => ({ ...p, id: `rv_${p.id}` }));
-                window.cachedRecentlyViewed = (viewed && viewed.length > 0) ? [...viewed, ...sample.slice(viewed.length)] : sample;
-                renderRecentlyViewed(window.cachedRecentlyViewed);
-            })
-            .catch(err => {
-                console.warn("Recently viewed fallback error:", err);
-            });
+        return;
     }
+
+    const pool = (window.BIRMARKET_DATA && window.BIRMARKET_DATA.topProducts) || [];
+    const sample = pool.slice(0, 10).map(p => ({ ...p, id: `rv_${p.id}` }));
+    window.cachedRecentlyViewed = (viewed && viewed.length > 0) ? [...viewed, ...sample.slice(viewed.length)] : sample;
+    renderRecentlyViewed(window.cachedRecentlyViewed);
 }
 
 let topSwiperInstance = null;
@@ -763,42 +748,46 @@ function renderTopProducts(products) {
     })).join('');
 
     if (topSwiperInstance) {
-        topSwiperInstance.destroy(true, true);
+        try { topSwiperInstance.destroy(true, true); } catch(e) {}
     }
 
-    if (document.querySelector('.topSwiper')) {
-        topSwiperInstance = new Swiper('.topSwiper', {
-            slidesPerView: 'auto',
-            spaceBetween: 16,
-            navigation: {
-                nextEl: '.top-button-next',
-                prevEl: '.top-button-prev',
-            },
-            pagination: {
-                el: '.top-pagination',
-                clickable: true,
-            },
-            breakpoints: {
-                1280: {
-                    slidesPerView: 5,
-                    slidesPerGroup: 5,
-                    spaceBetween: 16
-                }
+    topSwiperInstance = safeInitSwiper('.topSwiper', {
+        slidesPerView: 'auto',
+        spaceBetween: 16,
+        navigation: {
+            nextEl: '.top-button-next',
+            prevEl: '.top-button-prev',
+        },
+        pagination: {
+            el: '.top-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            1280: {
+                slidesPerView: 5,
+                slidesPerGroup: 5,
+                spaceBetween: 16
             }
-        });
-    }
+        }
+    });
 }
 
 function initTopProducts() {
+    const pool = (window.BIRMARKET_DATA && window.BIRMARKET_DATA.topProducts) || [];
+    if (pool.length > 0) {
+        window.cachedTopProducts = pool.slice(0, 15).map(p => ({ ...p, id: `top_${p.id}` }));
+        renderTopProducts(window.cachedTopProducts);
+    }
     fetch("top.json")
         .then(response => response.json())
         .then(data => {
             const rawProducts = (data.products || []).slice(0, 15);
-            const products = rawProducts.map(p => ({ ...p, id: `top_${p.id}` }));
-            window.cachedTopProducts = products;
-            renderTopProducts(window.cachedTopProducts);
+            if (rawProducts.length > 0) {
+                window.cachedTopProducts = rawProducts.map(p => ({ ...p, id: `top_${p.id}` }));
+                renderTopProducts(window.cachedTopProducts);
+            }
         })
-        .catch(err => console.error("TOP məhsullar xətası:", err));
+        .catch(() => {});
 }
 
 window.onLanguageChange = function() {
@@ -823,15 +812,23 @@ window.onLanguageChange = function() {
     }
 };
 
-initRecentlyViewed();
-initSaleOfDay();
-initBrandsSwiper();
-initSellersSwiper();
-initBestSellers();
-initAktualCategories();
-initMegaDiscounts();
-initTopProducts();
-initNewProducts();
+function initializeAllSections() {
+    try { initRecentlyViewed(); } catch (e) { console.warn(e); }
+    try { initSaleOfDay(); } catch (e) { console.warn(e); }
+    try { initBrandsSwiper(); } catch (e) { console.warn(e); }
+    try { initSellersSwiper(); } catch (e) { console.warn(e); }
+    try { initBestSellers(); } catch (e) { console.warn(e); }
+    try { initAktualCategories(); } catch (e) { console.warn(e); }
+    try { initMegaDiscounts(); } catch (e) { console.warn(e); }
+    try { initTopProducts(); } catch (e) { console.warn(e); }
+    try { initNewProducts(); } catch (e) { console.warn(e); }
+}
+
+initializeAllSections();
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeAllSections);
+}
 
 const azerbaijanCities = [
 

@@ -587,3 +587,24 @@ body {
         padding-bottom: 64px !important;
     }
 }
+
+.swiper {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .swiper {
+        overflow-x: auto !important;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+    .swiper::-webkit-scrollbar {
+        display: none;
+    }
+    .swiper-wrapper {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+    }
+}
